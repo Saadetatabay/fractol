@@ -10,6 +10,15 @@
 #define WIDTH 800
 #define HEIGHT 800
 
+#define BLACK       0x000000
+#define WHITE       0xFFFFFF
+#define RED         0xFF0000
+#define GREEN       0x00FF00
+#define BLUE        0x0000FF
+#define YELLOW      0xFFFF00
+#define MAGENTA     0xFF00FF
+#define CYAN        0x00FFFF
+
 typedef struct s_num
 {
 	double	real_x;
@@ -29,6 +38,8 @@ typedef struct s_fractol{
 	void	*mlx_wind;
 	t_img	img;
 	char	*name;
+	double	escape_value;
+	int		iteration;
 }t_fractal;
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
