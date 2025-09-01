@@ -5,11 +5,13 @@
 
 #define HEIGHT 400
 #define WIDTH 400
+
 typedef struct sdata{
     void *my_con;
     void *my_win;
     int colour;
 }tdata;
+
 int colour_screen(tdata *data)
 {
     for(int x = 0;x < WIDTH;x++)

@@ -29,6 +29,7 @@ int colour_screen(t_var *t_data,int colour)
         for(int x = 0;x<HEIGHT;x++)
         {
             pixel_address = (y * t_data->img.line_len) + (x*(t_data->img.bits_per_pixel/8));
+            //hafızada her pikselin 4 baytı vardı pixel_adress pikselin başlangıç adresi 
             t_data->img.img_pixel_ptr[pixel_address + 0] = colour & 0xFF;          // mavi
             t_data->img.img_pixel_ptr[pixel_address + 1] = (colour >> 8) & 0xFF;   // yeşil
             t_data->img.img_pixel_ptr[pixel_address + 2] = 0xFF ;//(colour >> 16) & 0xFF;  // kırmızı

@@ -78,7 +78,7 @@ int main(int arg,char *argv[])
         }
         fractol.img.pix_ptr = mlx_get_data_addr(fractol.img.img_ptr,&fractol.img.bit,&fractol.img.line,&fractol.img.endian);
         fractol.escape_value = 4;
-        fractol.iteration = 42;
+        fractol.iteration = 150;
         while (y < HEIGHT)
         {
 			x = 0;
