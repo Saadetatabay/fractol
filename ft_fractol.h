@@ -19,6 +19,11 @@
 #define MAGENTA     0xFF00FF
 #define CYAN        0x00FFFF
 
+#define RIGHT	65363
+#define LEFT	65361
+#define UP		65362
+#define DOWN	65364
+
 typedef struct s_num
 {
 	double	real_x;
@@ -40,8 +45,14 @@ typedef struct s_fractol{
 	char	*name;
 	double	escape_value;
 	int		iteration;
+	double		a;
+	double		b;
 }t_fractal;
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putstr_fd(char *s, int fd);
+void draw(t_fractal *fractol);
+void    event_init(t_fractal *farcatl);
+int my_close(t_fractal *fractol);
+int key(int keysym,t_fractal *fractol);
 #endif
