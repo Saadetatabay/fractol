@@ -29,7 +29,7 @@ int key(int keysym,tdata *mydata)
 
 int change_colour(tdata *mydata)
 {
-    mlx_clear_window(mydata->mlx_conn,mydata->mlx_window);
+    mlx_clear_window(mydata->mlx_conn,mydata->mlx_window); //pencerenin içini temizler
     mlx_string_put(mydata->mlx_conn,mydata->mlx_window,150,150,mydata->colour,"saadet ayseyi seviyor");
     if(mydata->colour == 0XFF0000)
         mydata->colour = 0x00FF00;//gren yaptık
