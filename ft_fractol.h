@@ -50,6 +50,11 @@ typedef struct s_fractol{
 	double		a;
 	double		b;
 	float		zomm_in;
+	double		julia_r;
+	double		julia_i;
+	t_num		z;
+	t_num		c;
+
 }t_fractal;
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -58,4 +63,5 @@ void draw(t_fractal *fractol);
 void    event_init(t_fractal *farcatl);
 int my_close(t_fractal *fractol);
 int key(int keysym,t_fractal *fractol);
+
 #endif
