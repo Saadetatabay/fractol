@@ -23,6 +23,8 @@
 #define LEFT	65361
 #define UP		65362
 #define DOWN	65364
+#define ZOOM_IN 65451
+#define ZOOM_OUT 65453
 
 typedef struct s_num
 {
@@ -47,6 +49,7 @@ typedef struct s_fractol{
 	int		iteration;
 	double		a;
 	double		b;
+	float		zomm_in;
 }t_fractal;
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

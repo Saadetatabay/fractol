@@ -27,8 +27,8 @@ static void pixel(int x,int y,t_fractal *fractol)
 	
 	z.real_x = 0; //başlangıçta 0
 	z.imaginary_y = 0; //başlangıçta 0
-	c.real_x = scale(x,-2,2,0,WIDTH) + fractol->a; //-2 2 arasına scale ettik
-	c.imaginary_y = scale(y,2,-2,0,HEIGHT) + fractol->b; //-2 ile 2 arasına scale ettik
+	c.real_x = scale(x,-2,2,0,WIDTH)*fractol->zomm_in + fractol->a; //-2 2 arasına scale ettik
+	c.imaginary_y = scale(y,2,-2,0,HEIGHT)*fractol->zomm_in + fractol->b; //-2 ile 2 arasına scale ettik
     i = 0;
     while (i < fractol->iteration)
     {
@@ -60,35 +60,22 @@ int key(int keysym,t_fractal *fractol)
         return (1);
     }
     else if (keysym == RIGHT)
-    {
-        printf("right");
         fractol->a += 0.5;
-    }
     else if (keysym == LEFT)
-    {
-        printf("left");
         fractol->a += -0.5;
-    }
-        else if (keysym == LEFT)
-    {
-        printf("left");
+    else if (keysym == LEFT)
         fractol->a += -0.5;
-    }
-        else if (keysym == UP)
-    {
-        printf("up");
+    else if (keysym == UP)
         fractol->b += 0.5;
-    }
-
     else if (keysym == DOWN)
-    {
-        printf("down");
         fractol->b -= 0.5;
-    }
+    else if (keysym == ZOOM_IN)
+        fractol->zomm_in *= 0.95;
+    else if (keysym == ZOOM_OUT)
+        fractol->zomm_in *= 1.05;    
     draw(fractol);
     return (0);
 }
-
 
 int my_close(t_fractal *fractol)
 {
@@ -98,6 +85,7 @@ int my_close(t_fractal *fractol)
     exit(0);
     return (0);
 }
+
 void    event_init(t_fractal *farcatl)
 {
     mlx_hook(farcatl->mlx_wind,2,1L<<0,key,farcatl); //keypress
@@ -128,6 +116,7 @@ int main(int arg,char *argv[])
     t_fractal fractol;
     fractol.a = 0.0;
     fractol.b=0.0;
+    fractol.zomm_in = 1.0;
     if ((arg == 2 && !ft_strncmp(argv[1],"mandelbrot",10)) || (arg == 4 && !ft_strncmp(argv[1],"julia",5)))
     {
         fractol.name = argv[1];
