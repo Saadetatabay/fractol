@@ -1,10 +1,16 @@
-#include "ft_fractol.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fractol.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: satabay <satabay@student.42istanbul.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/27 15:26:15 by satabay           #+#    #+#             */
+/*   Updated: 2025/09/27 15:26:30 by satabay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-double  scale(double num,double new_min,double new_max,double old_min,double old_max)
-{
-    return (((num - old_min)*(new_max - new_min) / (old_max - old_min)) + new_min);
-}
+#include "ft_fractol.h"
 
 static  void put_pixel(int x,int y,t_img *img,int colour)
 {
@@ -12,24 +18,6 @@ static  void put_pixel(int x,int y,t_img *img,int colour)
 	offset = (y * img->line) + (x * (img->bit / 8));
     //unsigned int * kestleyerek bu adresi 4 baytlık integer gibi yorulatıyrouz
 	*(unsigned int *)(img->pix_ptr + offset) = colour;
-}
-
-void	mandel_vs_julia(int x,int y,t_fractal *fractol)
-{
-	if (!ft_strncmp(fractol->name,"mandelbrot",10))
-	{
-		fractol->z.real_x = 0; //başlangıçta 0
-		fractol->z.imaginary_y = 0; //başlangıçta 0
-		fractol->c.real_x = scale(x,-2,2,0,WIDTH)*fractol->zomm_in + fractol->a; //-2 2 arasına scale ettik
-		fractol->c.imaginary_y = scale(y,2,-2,0,HEIGHT)*fractol->zomm_in + fractol->b; //-2 ile 2 arasına scale ettik
-	}
-	else
-	{
-		fractol->z.real_x = scale(x,-2,2,0,WIDTH)*fractol->zomm_in + fractol->a;
-		fractol->z.imaginary_y = scale(y,2,-2,0,HEIGHT)*fractol->zomm_in + fractol->b;
-		fractol->c.real_x = fractol->julia_r;
-		fractol->c.imaginary_y = fractol->julia_i;
-	}
 }
 
 // z = z^2 + c 
@@ -60,49 +48,6 @@ static void pixel(int x,int y,t_fractal *fractol)
     }
 	put_pixel(x,y,&fractol->img,MAGENTA);
     //mandelbrot set demek
-}
-
-int key(int keysym,t_fractal *fractol)
-{
-    if(keysym ==65307)
-    {
-        mlx_destroy_window(fractol->mlx_conn,fractol->mlx_wind);
-        mlx_destroy_display(fractol->mlx_conn);
-        free(fractol->mlx_conn);
-        return (1);
-    }
-    else if (keysym == RIGHT)
-        fractol->a += 0.5;
-    else if (keysym == LEFT)
-        fractol->a += -0.5;
-    else if (keysym == LEFT)
-        fractol->a += -0.5;
-    else if (keysym == UP)
-        fractol->b += 0.5;
-    else if (keysym == DOWN)
-        fractol->b -= 0.5;
-    else if (keysym == ZOOM_IN)
-        fractol->zomm_in *= 0.95;
-    else if (keysym == ZOOM_OUT)
-        fractol->zomm_in *= 1.05;    
-    draw(fractol);
-    return (0);
-}
-
-int my_close(t_fractal *fractol)
-{
-    mlx_destroy_window(fractol->mlx_conn, fractol->mlx_wind);
-    mlx_destroy_display(fractol->mlx_conn);
-    free(fractol->mlx_conn);
-    exit(0);
-    return (0);
-}
-
-void    event_init(t_fractal *farcatl)
-{
-    mlx_hook(farcatl->mlx_wind,2,1L<<0,key,farcatl); //keypress
-    //mlx_hook(farcatl->mlx_wind,4,1L<<2,mouse,farcatl); //button press
-    mlx_hook(farcatl->mlx_wind,17,1L<<17,my_close,farcatl); //destroy notify
 }
 
 void draw(t_fractal *fractol)
@@ -143,6 +88,7 @@ void	fractol_init(t_fractal *fractol)
         {
             mlx_destroy_window(fractol->mlx_conn,fractol->mlx_wind);
             mlx_destroy_display(fractol->mlx_conn);
+            free(fractol->mlx_conn);
         }
 }
 

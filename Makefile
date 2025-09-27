@@ -1,8 +1,8 @@
-SRC = ft_fractol.c ft_utilis.c
+SRC = ft_fractol.c ft_utilis.c event.c
 OBJ = $(SRC:.c=.o)
 NAME = fractol
 CC = cc 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 all : mlx $(NAME)
 

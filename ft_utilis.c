@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utilis.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: satabay <satabay@student.42istanbul.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/27 15:29:07 by satabay           #+#    #+#             */
+/*   Updated: 2025/09/27 15:32:30 by satabay          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_fractol.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -29,5 +41,28 @@ void	ft_putstr_fd(char *s, int fd)
 	{
 		write(fd, (s + i), 1);
 		i++;
+	}
+}
+
+double	scale(double num, double new_min, double new_max, double old_min, double old_max)
+{
+	return (((num - old_min) * (new_max - new_min) / (old_max - old_min)) + new_min);
+}
+
+void	mandel_vs_julia(int x, int y, t_fractal *fractol)
+{
+	if (!ft_strncmp(fractol->name, "mandelbrot", 10))
+	{
+		fractol -> z.real_x = 0; //başlangıçta 0
+		fractol -> z.imaginary_y = 0; //başlangıçta 0
+		fractol -> c.real_x = scale(x, -2, 2, 0, WIDTH) * fractol -> zomm_in + fractol -> a; //-2 2 arasına scale ettik
+		fractol -> c.imaginary_y = scale(y, 2, -2, 0, HEIGHT) * fractol->zomm_in + fractol->b; //-2 ile 2 arasına scale ettik
+	}
+	else
+	{
+		fractol -> z.real_x = scale(x, -2, 2, 0, WIDTH) * fractol -> zomm_in + fractol -> a;
+		fractol -> z.imaginary_y = scale(y, 2, -2, 0, HEIGHT) * fractol -> zomm_in + fractol -> b;
+		fractol -> c.real_x = fractol -> julia_r;
+		fractol -> c.imaginary_y = fractol -> julia_i;
 	}
 }
