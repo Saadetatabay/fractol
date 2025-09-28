@@ -12,15 +12,25 @@
 
 #include "ft_fractol.h"
 
+int zoom(int button, int x, int y, t_fractal *fractol)
+{
+	(void)x;
+	(void)y;
+	if (button == 4)
+		fractol -> zomm_in *= 0.98;
+	else if (button == 5)
+		fractol -> zomm_in *= 1.02;
+	draw(fractol);
+	return(0);
+}
+
 int	my_close(t_fractal *fractol)
 {
 	mlx_destroy_image(fractol -> mlx_conn, fractol -> img.img_ptr);
 	mlx_destroy_window(fractol -> mlx_conn, fractol -> mlx_wind);
 	mlx_destroy_display(fractol -> mlx_conn);
 	free(fractol -> mlx_conn);
-	//free(fractol);
 	exit(0);
-	return (0);
 }
 
 int key(int keysym,t_fractal *fractol)
@@ -32,7 +42,6 @@ int key(int keysym,t_fractal *fractol)
 		mlx_destroy_display(fractol -> mlx_conn);
 		free(fractol -> mlx_conn);
 		exit(0);
-		return (0);
 	}
 	else if (keysym == XK_Right)
 		fractol -> a += 0.5;
@@ -52,9 +61,9 @@ int key(int keysym,t_fractal *fractol)
 
 void    event_init(t_fractal *farcatl)
 {
-	mlx_hook(farcatl->mlx_wind, 2, 1L << 0, key, farcatl); //keypress
-	//mlx_hook(farcatl->mlx_wind,4,1L<<2,mouse,farcatl); //button press
-	mlx_hook(farcatl -> mlx_wind, 17, 1L << 17, my_close, farcatl); //destroy notify
+	mlx_hook(farcatl->mlx_wind, KeyPress, KeyPressMask, key, farcatl);
+	mlx_hook(farcatl->mlx_wind, ButtonPress, ButtonPressMask, zoom,farcatl);
+	mlx_hook(farcatl -> mlx_wind, DestroyNotify, StructureNotifyMask, my_close, farcatl);
 }
 
 double ft_atof(const char *str)
@@ -97,5 +106,5 @@ double ft_atof(const char *str)
 		result1 *= 0.1;
 	}
 	
-	return(result + result1);
+	return(sign*(result + result1));
 }

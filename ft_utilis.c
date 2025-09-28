@@ -44,19 +44,19 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-double	scale(double num, double new_min, double new_max, double old_min, double old_max)
+double	scale(double num, double new_min, double new_max, double old_max)
 {
-	return (((num - old_min) * (new_max - new_min) / (old_max - old_min)) + new_min);
+	return (((num - 0) * (new_max - new_min) / (old_max - 0)) + new_min);
 }
 
 void	mandel_vs_julia(int x, int y, t_fractal *fractol)
 {
 	if (!ft_strncmp(fractol->name, "mandelbrot", 10))
 	{
-		fractol -> z.real_x = 0; //başlangıçta 0
-		fractol -> z.imaginary_y = 0; //başlangıçta 0
-		fractol -> c.real_x = scale(x, -2, 2, 0, WIDTH) * fractol -> zomm_in + fractol -> a; //-2 2 arasına scale ettik
-		fractol -> c.imaginary_y = scale(y, 2, -2, 0, HEIGHT) * fractol->zomm_in + fractol->b; //-2 ile 2 arasına scale ettik
+		fractol -> z.real_x = 0;
+		fractol -> z.imaginary_y = 0;
+		fractol -> c.real_x = scale(x, -2, 2, 0, WIDTH) * fractol -> zomm_in + fractol -> a;
+		fractol -> c.imaginary_y = scale(y, 2, -2, 0, HEIGHT) * fractol->zomm_in + fractol->b;
 	}
 	else
 	{
@@ -65,4 +65,11 @@ void	mandel_vs_julia(int x, int y, t_fractal *fractol)
 		fractol -> c.real_x = fractol -> julia_r;
 		fractol -> c.imaginary_y = fractol -> julia_i;
 	}
+}
+
+void	params_error(void)
+{
+	write(2, "wrong params", 12);
+	write(2, "valid params are:\n", 18);
+	write(2, "./fractol Mandelbrot\n./fractol Julia <real> <imaginary>\n", 57);
 }

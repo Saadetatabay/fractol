@@ -1,12 +1,13 @@
 #ifndef FT_FRACTOL_H
 # define FT_FRACTOL_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <math.h>
+# include <unistd.h>
+# include <X11/X.h>
 # include <X11/keysym.h>
-#include "minilibx-linux/mlx.h"
+# include "minilibx-linux/mlx.h"
 
 #define WIDTH 800
 #define HEIGHT 800
@@ -66,5 +67,7 @@ int my_close(t_fractal *fractol);
 int key(int keysym,t_fractal *fractol);
 double	scale(double num, double new_min, double new_max, double old_min, double old_max);
 void	mandel_vs_julia(int x, int y, t_fractal *fractol);
+double ft_atof(const char *str);
+void	params_error();
 
 #endif

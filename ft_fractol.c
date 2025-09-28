@@ -68,10 +68,8 @@ void	fractol_init(t_fractal *fractol)
 {
 	fractol->mlx_conn = mlx_init();
 	if (!fractol->mlx_conn)
-	{
-		printf("fail");
+
 		return ;
-	}
 	fractol->mlx_wind = mlx_new_window(fractol->mlx_conn, WIDTH, HEIGHT, fractol->name);
 	if (!fractol->mlx_wind)
 	{
@@ -85,6 +83,7 @@ void	fractol_init(t_fractal *fractol)
 		mlx_destroy_window(fractol->mlx_conn, fractol->mlx_wind);
 		mlx_destroy_display(fractol->mlx_conn);
 		free(fractol->mlx_conn);
+		return;
 	}
 }
 
@@ -99,8 +98,8 @@ int	main(int arg,char *argv[])
 		fractol.name = argv[1];
 		if (arg == 4)
 		{
-			fractol.julia_r = atof(argv[2]); 
-			fractol.julia_i = atof(argv[3]);
+			fractol.julia_r = ft_atof(argv[2]); 
+			fractol.julia_i = ft_atof(argv[3]);
 		}
 		fractol_init(&fractol);
 		fractol.img.pix_ptr = mlx_get_data_addr(fractol.img.img_ptr, &fractol.img.bit, &fractol.img.line, &fractol.img.endian);
@@ -111,5 +110,8 @@ int	main(int arg,char *argv[])
 		mlx_loop(fractol.mlx_conn);
 	}
 	else
-		return (1);
+	{
+		params_error();
+		exit(1);
+	}
 }
