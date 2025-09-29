@@ -102,7 +102,8 @@ int	main(int arg, char *argv[])
 	fractol.a = 0.0;
 	fractol.b = 0.0;
 	fractol.zomm_in = 1.0;
-	if ((arg == 2 && !ft_strncmp(argv[1], "mandelbrot", 10)) || (arg == 4 && !ft_strncmp(argv[1], "julia", 5)))
+	if ((arg == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
+		|| (arg == 4 && !ft_strncmp(argv[1], "julia", 5)))
 	{
 		fractol.name = argv[1];
 		if (arg == 4)
