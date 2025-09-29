@@ -15,26 +15,29 @@
 static void	put_pixel(int x, int y, t_img *img, int colour)
 {
 	int	offset;
-	
+
 	offset = (y * img -> line) + (x * (img -> bit / 8));
 	*(unsigned int *)(img->pix_ptr + offset) = colour;
 }
 
 static void	pixel(int x, int y, t_fractal *fractol)
 {
-	int	i;
-    int	color;
-    double	tem_real;
+	int		i;
+	int		color;
+	double	tem_real;
 
 	i = 0;
 	mandel_vs_julia(x, y, fractol);
 	while (i < fractol->iteration)
 	{
-		tem_real = (fractol->z.real_x * fractol->z.real_x) - (fractol->z.imaginary_y * fractol->z.imaginary_y);
-		fractol->z.imaginary_y = 2 * fractol->z.imaginary_y * fractol->z.real_x; 
+		tem_real = (fractol->z.real_x * fractol->z.real_x)
+			/ - (fractol->z.imaginary_y * fractol->z.imaginary_y);
+		fractol->z.imaginary_y = 2 * fractol->z.imaginary_y * fractol->z.real_x;
 		fractol->z.real_x = tem_real + fractol->c.real_x;
 		fractol->z.imaginary_y += fractol->c.imaginary_y;
-		if ((fractol->z.real_x * fractol->z.real_x) + (fractol->z.imaginary_y * fractol->z.imaginary_y) > fractol->escape_value)
+		if ((fractol->z.real_x * fractol->z.real_x)
+			/ + (fractol->z.imaginary_y * fractol->z.imaginary_y)
+			/ > fractol->escape_value)
 		{
 			color = scale(i, BLACK, WHITE, 0, fractol->iteration);
 			put_pixel(x, y, &fractol->img, color);
@@ -49,7 +52,7 @@ void	draw(t_fractal *fractol)
 {
 	int	x;
 	int	y;
-	
+
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -61,16 +64,17 @@ void	draw(t_fractal *fractol)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(fractol->mlx_conn, fractol->mlx_wind, fractol->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(fractol->mlx_conn, fractol->mlx_wind,
+		/ fractol->img.img_ptr, 0, 0);
 }
 
 void	fractol_init(t_fractal *fractol)
 {
 	fractol->mlx_conn = mlx_init();
 	if (!fractol->mlx_conn)
-
 		return ;
-	fractol->mlx_wind = mlx_new_window(fractol->mlx_conn, WIDTH, HEIGHT, fractol->name);
+	fractol->mlx_wind = mlx_new_window(fractol->mlx_conn,
+			/ WIDTH, HEIGHT, fractol->name);
 	if (!fractol->mlx_wind)
 	{
 		mlx_destroy_display(fractol->mlx_conn);
@@ -83,28 +87,31 @@ void	fractol_init(t_fractal *fractol)
 		mlx_destroy_window(fractol->mlx_conn, fractol->mlx_wind);
 		mlx_destroy_display(fractol->mlx_conn);
 		free(fractol->mlx_conn);
-		return;
+		return ;
 	}
+	fractol->img.pix_ptr = mlx_get_data_addr(fractol->img.img_ptr,
+			/ &fractol->img.bit, &fractol->img.line, &fractol->img.endian);
+	fractol->escape_value = 4;
+	fractol->iteration = 150;
 }
 
-int	main(int arg,char *argv[])
+int	main(int arg, char *argv[])
 {
-	t_fractal fractol;
+	t_fractal	fractol;
+
 	fractol.a = 0.0;
-	fractol.b=0.0;
+	fractol.b = 0.0;
 	fractol.zomm_in = 1.0;
-	if ((arg == 2 && !ft_strncmp(argv[1], "mandelbrot", 10)) || (arg == 4 && !ft_strncmp(argv[1], "julia", 5)))
+	if ((arg == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
+		/|| (arg == 4 && !ft_strncmp(argv[1], "julia", 5)))
 	{
 		fractol.name = argv[1];
 		if (arg == 4)
 		{
-			fractol.julia_r = ft_atof(argv[2]); 
+			fractol.julia_r = ft_atof(argv[2]);
 			fractol.julia_i = ft_atof(argv[3]);
 		}
 		fractol_init(&fractol);
-		fractol.img.pix_ptr = mlx_get_data_addr(fractol.img.img_ptr, &fractol.img.bit, &fractol.img.line, &fractol.img.endian);
-		fractol.escape_value = 4;
-		fractol.iteration = 150;
 		draw(&fractol);
 		event_init(&fractol);
 		mlx_loop(fractol.mlx_conn);
