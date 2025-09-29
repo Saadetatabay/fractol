@@ -65,7 +65,7 @@ void draw(t_fractal *fractol);
 void    event_init(t_fractal *farcatl);
 int my_close(t_fractal *fractol);
 int key(int keysym,t_fractal *fractol);
-double	scale(double num, double new_min, double new_max, double old_min, double old_max);
+double	scale(double num, double new_min, double new_max, double old_max);
 void	mandel_vs_julia(int x, int y, t_fractal *fractol);
 double ft_atof(const char *str);
 void	params_error();

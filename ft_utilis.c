@@ -55,13 +55,13 @@ void	mandel_vs_julia(int x, int y, t_fractal *fractol)
 	{
 		fractol -> z.real_x = 0;
 		fractol -> z.imaginary_y = 0;
-		fractol -> c.real_x = scale(x, -2, 2, 0, WIDTH) * fractol -> zomm_in + fractol -> a;
-		fractol -> c.imaginary_y = scale(y, 2, -2, 0, HEIGHT) * fractol->zomm_in + fractol->b;
+		fractol -> c.real_x = scale(x, -2, 2, WIDTH) * fractol -> zomm_in + fractol -> a;
+		fractol -> c.imaginary_y = scale(y, 2, -2, HEIGHT) * fractol->zomm_in + fractol->b;
 	}
 	else
 	{
-		fractol -> z.real_x = scale(x, -2, 2, 0, WIDTH) * fractol -> zomm_in + fractol -> a;
-		fractol -> z.imaginary_y = scale(y, 2, -2, 0, HEIGHT) * fractol -> zomm_in + fractol -> b;
+		fractol -> z.real_x = scale(x, -2, 2, WIDTH) * fractol -> zomm_in + fractol -> a;
+		fractol -> z.imaginary_y = scale(y, 2, -2, HEIGHT) * fractol -> zomm_in + fractol -> b;
 		fractol -> c.real_x = fractol -> julia_r;
 		fractol -> c.imaginary_y = fractol -> julia_i;
 	}

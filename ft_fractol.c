@@ -31,15 +31,15 @@ static void	pixel(int x, int y, t_fractal *fractol)
 	while (i < fractol->iteration)
 	{
 		tem_real = (fractol->z.real_x * fractol->z.real_x)
-			/ - (fractol->z.imaginary_y * fractol->z.imaginary_y);
+			- (fractol->z.imaginary_y * fractol->z.imaginary_y);
 		fractol->z.imaginary_y = 2 * fractol->z.imaginary_y * fractol->z.real_x;
 		fractol->z.real_x = tem_real + fractol->c.real_x;
 		fractol->z.imaginary_y += fractol->c.imaginary_y;
 		if ((fractol->z.real_x * fractol->z.real_x)
-			/ + (fractol->z.imaginary_y * fractol->z.imaginary_y)
-			/ > fractol->escape_value)
+			+ (fractol->z.imaginary_y * fractol->z.imaginary_y)
+			> fractol->escape_value)
 		{
-			color = scale(i, BLACK, WHITE, 0, fractol->iteration);
+			color = scale(i, BLACK, WHITE, fractol->iteration);
 			put_pixel(x, y, &fractol->img, color);
 			return ;
 		}
@@ -65,7 +65,7 @@ void	draw(t_fractal *fractol)
 		y++;
 	}
 	mlx_put_image_to_window(fractol->mlx_conn, fractol->mlx_wind,
-		/ fractol->img.img_ptr, 0, 0);
+		fractol->img.img_ptr, 0, 0);
 }
 
 void	fractol_init(t_fractal *fractol)
@@ -74,7 +74,7 @@ void	fractol_init(t_fractal *fractol)
 	if (!fractol->mlx_conn)
 		return ;
 	fractol->mlx_wind = mlx_new_window(fractol->mlx_conn,
-			/ WIDTH, HEIGHT, fractol->name);
+			WIDTH, HEIGHT, fractol->name);
 	if (!fractol->mlx_wind)
 	{
 		mlx_destroy_display(fractol->mlx_conn);
@@ -90,7 +90,7 @@ void	fractol_init(t_fractal *fractol)
 		return ;
 	}
 	fractol->img.pix_ptr = mlx_get_data_addr(fractol->img.img_ptr,
-			/ &fractol->img.bit, &fractol->img.line, &fractol->img.endian);
+			&fractol->img.bit, &fractol->img.line, &fractol->img.endian);
 	fractol->escape_value = 4;
 	fractol->iteration = 150;
 }
@@ -102,8 +102,7 @@ int	main(int arg, char *argv[])
 	fractol.a = 0.0;
 	fractol.b = 0.0;
 	fractol.zomm_in = 1.0;
-	if ((arg == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
-		/|| (arg == 4 && !ft_strncmp(argv[1], "julia", 5)))
+	if ((arg == 2 && !ft_strncmp(argv[1], "mandelbrot", 10)) || (arg == 4 && !ft_strncmp(argv[1], "julia", 5)))
 	{
 		fractol.name = argv[1];
 		if (arg == 4)
